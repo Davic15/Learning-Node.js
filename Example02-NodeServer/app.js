@@ -1,8 +1,9 @@
 // Global module http.
 const http = require('http');
 
-function requestListener(req, res) {
+const server = http.createServer(function(req, res) {
+    console.log(req);
+});
 
-}
-
-http.createServer(requestListener);
+// Start the process to listen incoming requests
+server.listen(3000);
