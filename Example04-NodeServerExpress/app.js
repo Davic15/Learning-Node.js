@@ -1,5 +1,4 @@
-// node specific modules
-const http = require('http');
+const path = require('path');
 
 // third party modules
 const express = require('express');
@@ -12,12 +11,14 @@ const shopRoutes = require('./routes/shop');
 
 // Parsing Middleware
 app.use(bodyParser.urlencoded({extended: false}));
+// access to a folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(adminRoutes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
-    res.status(404).send('<h1>Page not found</h1>');
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 })
 
 app.listen(3000);
