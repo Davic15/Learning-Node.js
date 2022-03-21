@@ -1,5 +1,5 @@
 /** 
- * First App using Node.js
+ * Section 1: Introduction
 */
     
 //* To run the script just write node app.js.
