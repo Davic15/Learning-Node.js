@@ -82,3 +82,38 @@ console.log(copiedArray);
 
 const copiedArrayTwo = [...hobbies];
 console.log(copiedArrayTwo);
+
+const copiedPerson = {...person};
+console.log(copiedPerson);
+
+//* Rest operator -> used for functions
+const toArray = (...args) => {
+    return args;
+}
+
+console.log(toArray(1, 2, 3, 4));
+
+
+//* Destructuring
+//* Object destructuring
+const printName = (person) => {
+    console.log(person.name);
+}
+
+printName(person);
+
+const printNameTwo = ({ name }) => {
+    console.log(name);
+}
+printNameTwo(person);
+
+
+//* Async code & Promises
+//* Async code does not finish immediately, it takes time
+//* Execute Sync code first and Async code later.
+//* Call back function are common un Node.js
+console.log('Hi');
+setTimeout(() => {
+    console.log('Timer is done!');
+}, 2000);
+console.log('Bye');
