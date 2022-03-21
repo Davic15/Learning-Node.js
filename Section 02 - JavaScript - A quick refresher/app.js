@@ -117,3 +117,6 @@ setTimeout(() => {
     console.log('Timer is done!');
 }, 2000);
 console.log('Bye');
+
+//* Templante literals 
+//* ` ${variable} `
