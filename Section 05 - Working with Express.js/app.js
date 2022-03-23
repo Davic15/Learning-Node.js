@@ -10,7 +10,10 @@ const shopRoutes = require('./routes/shop');
 const app = express();
 
 //* This middleware will parse the content body. Will parse the content of the form
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: false}));
+
+//* Work with the public Folder (CSS), and send the path
+app.use(express.static(path.join(__dirname, 'public')));
 
 //* Middleware method
 //* It will be execute for every incomming request. Work with 3 arguments. next is a function passing to the function, allows to go to the next middleware;
