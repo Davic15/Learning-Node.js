@@ -1,12 +1,11 @@
 {
-  "name": "section-05---working-with-express",
+  "name": "section-05---practice-01",
   "version": "1.0.0",
-  "description": "Section 05 - Working with Express.js",
+  "description": "Section 05 - Practice 01",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
-    "start-server": "nodemon app.js"
+    "start": "nodemon app.js"
   },
   "author": "Franklin David Macias Avellan",
   "license": "ISC",
@@ -14,7 +13,6 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "body-parser": "^1.19.2",
     "express": "^4.17.3"
   }
 }
