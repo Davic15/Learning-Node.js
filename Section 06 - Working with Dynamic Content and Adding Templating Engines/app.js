@@ -2,7 +2,7 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const expressHbs = require('express-handlebars');
+//const expressHbs = require('express-handlebars');
 
 const app = express();
 
@@ -12,7 +12,7 @@ const app = express();
 app.set('views', 'views')*/
 
 //* handlebars
-app.engine(
+/*app.engine(
     'hbs',
     expressHbs({
       layoutsDir: 'views/layouts/',
@@ -21,7 +21,11 @@ app.engine(
     })
   );
 app.set('view engine', 'hbs');
-app.set('views', 'views');
+app.set('views', 'views');*/
+
+//* ejs
+app.set('view engine', 'ejs');
+app.set('views', 'views')
 
 const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
@@ -35,7 +39,7 @@ app.use(shopRoutes);
 app.use((req, res, next) => {
     //res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
     //* Pug template
-    res.status(404).render('404', {pageTitle: "Page not Found"});
+    res.status(404).render('404', {pageTitle: "Page not Found", path: null});
 });
 
 app.listen(3000);
