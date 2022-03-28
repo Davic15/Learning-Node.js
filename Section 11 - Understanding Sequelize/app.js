@@ -5,6 +5,12 @@ const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
+const Product = require('./models/product');
+const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-item');
+const Order = require('./models/order');
+const OrderItem = require('./models/order-item');
 
 const app = express();
 
@@ -17,16 +23,52 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+    User.findByPk(1)
+    .then(user => {
+        req.user = user;
+        next();
+    })
+    .catch(err => console.log(err));
+});
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.get404);
 
+//* Create a relation Product - User
+//* Delete on cascada, when a user is deleted, also delete the products
+Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'});
+User.hasMany(Product);
+//* Setting the cart model
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, {through: CartItem});
+Product.belongsToMany(Cart, {through: CartItem});
+//* Setting the order model
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, {through: OrderItem});
+
 sequelize
+//* never use force in production
+//.sync({force: true})
     .sync()
     .then(result => {
-    app.listen(3000);
-
+        return User.findByPk(1)
+    })
+    .then( user => {
+        if(!user) {
+            return User.create({name: 'David', email: 'test@test.com'})
+        } 
+        return user;
+    })
+    .then(user => {
+        return user.createCart();
+    })
+    .then(user => {
+        app.listen(3000);
     })
     .catch(err => {
         console.log(err);
