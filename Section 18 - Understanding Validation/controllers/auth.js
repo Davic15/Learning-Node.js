@@ -7,7 +7,7 @@ const { validationResult } = require('express-validator/check');
 
 const User = require('../models/user');
 
-let transport = nodemailer.createTransport({
+let transporter = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
   port: 2525,
   auth: {
@@ -15,6 +15,7 @@ let transport = nodemailer.createTransport({
     pass: "989b72c6291e6a"
   }
 });
+
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
   if (message.length > 0) {
@@ -200,7 +201,7 @@ exports.postReset = (req, res, next) => {
       })
       .then(result => {
         res.redirect('/');
-        transport.sendMail({
+        transporter.sendMail({
           to: req.body.email,
           from: 'shop@node-complete.com',
           subject: 'Password reset',
